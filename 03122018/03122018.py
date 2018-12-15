@@ -39,6 +39,28 @@ def part1(claims):
 
     print("overlaps: {}".format(overlaps))
 
+
+def part2(claims):
+    linear_space = defaultdict(int)
+    for claim in claims:
+        claim_space = claim.to_1d_space()
+        for x in claim_space:
+            linear_space[x] += 1
+
+    for claim in claims:
+        correct_claim = True
+
+        for i in range(claim.x, claim.x + claim.w):
+            for j in range(claim.y, claim.y + claim.h):
+                if linear_space[i + j * SQUARE_SIZE] != 1:
+                    correct_claim = False
+
+        if correct_claim:
+            print("unique claim: {}".format(claim))
+
+
+
+
 def main():
     claims = []
     with open("input", "r") as f:
@@ -47,8 +69,9 @@ def main():
         claims.append(Claim(claim_str))
 
     part1(claims)
-    
-    
+    part2(claims)
+
+
 
 if __name__ == "__main__":
     main()
