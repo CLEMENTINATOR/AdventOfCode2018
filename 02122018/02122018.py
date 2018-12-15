@@ -15,10 +15,20 @@ def part1(box_ids):
 
     print("Checksum : {}".format(double_count * triple_count))
 
+def part2(box_ids):
+    for box_id in box_ids:
+        for box_id_cmp in box_ids[box_ids.index(box_id) + 1:]:
+            correct_box_id = [x for x,y in zip(box_id, box_id_cmp) if x==y]
+            if len(correct_box_id) == len(box_id) - 1:
+                print("boxid: {}".format("".join(correct_box_id)))
+                return
+
+
 def main():
     with open("input", "r") as f:
         box_ids = f.read().split()
     part1(box_ids)
-    
+    part2(box_ids)
+
 if __name__ == "__main__":
     main()
