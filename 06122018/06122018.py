@@ -67,6 +67,23 @@ def part1(points):
     biggest_area = max(area_map, key=lambda k: area_map[k])
     print("biggest non infinite area size : {}".format(area_map[biggest_area]))
 
+def part2(points):
+    min_x = min(points, key=lambda k: k._x)._x
+    max_x = max(points, key=lambda k: k._x)._x
+    min_y = min(points, key=lambda k: k._y)._y
+    max_y = max(points, key=lambda k: k._y)._y
+    max_dist = 10000
+    i = 0
+    for y in range (min_y, max_y + 1):
+        for x in range (min_x, max_x + 1):
+            total_dist = 0
+            p = Point.__from_coordinates__(x, y)
+            for point in points:
+                total_dist += point.distance(p)
+            if total_dist < max_dist:
+                i+=1
+    print("region closest to points has size {}".format(i))
+
 def main():
     points = []
     with open("input", "r") as f:
@@ -75,10 +92,7 @@ def main():
             points.append(Point(coord_str))
 
     part1(points)
-
-
-
-
+    part2(points)
 
 if __name__ == "__main__":
     main()
