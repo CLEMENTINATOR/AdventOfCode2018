@@ -17,6 +17,17 @@ class Node(object):
             cksum += child.cksum()
         return cksum + sum(self._metadatas)
 
+    def value(self):
+        value = 0
+        if not self._children:
+            value = self.cksum()
+        else:
+            for metadata in self._metadatas:
+                metadata -= 1
+                if metadata < len(self._children):
+                    value += self._children[metadata].value()
+        return value
+
 def parse_data_queue(data_queue):
     node = Node()
     node_count = data_queue.popleft()
@@ -37,12 +48,18 @@ def part1(data_queue):
     node = parse_data_queue(data_queue)
     print(node.cksum())
 
+def part2(data_queue):
+    data_queue = deque(data_queue)
+    node = parse_data_queue(data_queue)
+    print(node.value())
+
 def main():
     with open("input", "r") as f:
         data_array = f.read().split(" ")
         data_array = list(map(int, data_array))
 
     part1(data_array)
+    part2(data_array)
 
 if __name__ == "__main__":
     main()
