@@ -89,6 +89,20 @@ class Chronogram(object):
         most_min_asleep = max(self.guards_mins_asleep[most_asleep_guard], key=lambda k: self.guards_mins_asleep[most_asleep_guard][k])
         print("strategy 1 : {}".format( most_asleep_guard * most_min_asleep))
 
+    def strategy2(self):
+        guard_id = None
+        most_asleep_min = 0
+        most_asleep_min_count = 0
+
+        for gid in self.guards_mins_asleep:
+            for minute in self.guards_mins_asleep[gid]:
+                if self.guards_mins_asleep[gid][minute] > most_asleep_min_count:
+                    guard_id = gid
+                    most_asleep_min = minute
+                    most_asleep_min_count = self.guards_mins_asleep[gid][minute]
+
+        print("strategy 2 : {}".format(most_asleep_min * guard_id))
+
 def main():
     records = []
     with open("input", "r") as f:
@@ -101,6 +115,7 @@ def main():
 
     chrono = Chronogram(records)
     chrono.strategy1()
+    chrono.strategy2()
 
 if __name__ == "__main__":
     main()
