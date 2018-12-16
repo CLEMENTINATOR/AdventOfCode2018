@@ -80,6 +80,7 @@ def main():
         marble_count = int(r[1])
         player_count = int(r[0])
         part1(player_count, marble_count)
+        part1(player_count, marble_count*100)
 
 if __name__ == "__main__":
     main()
